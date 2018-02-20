@@ -30,12 +30,19 @@ namespace LetMeCrypterU
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {          
-            txtOutput.Text= cp.Decrypt(txtInput.Text);
+        {
+            try
+            {
+                txtOutput.Text = cp.Decrypt(txtInput.Text);
+            }
+            catch(UnknownFormatException uke)
+            {
+                MessageBox.Show(uke.Message);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {           
+        {            
             txtOutput.Text = cp.Encrypt(txtInput.Text);
         }
 

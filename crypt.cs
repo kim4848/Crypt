@@ -23,11 +23,22 @@ namespace LetMeCrypterU
         {
             string result = "Error";
 
-            byte[] dataInput = Convert.FromBase64String(base64String);
-            string decodedString = Encoding.Default.GetString(dataInput);
+        
+            string ivStr = "";
+            string dataStr ="";
+            try
+            {
+                byte[] dataInput = Convert.FromBase64String(base64String);
+                string decodedString = Encoding.Default.GetString(dataInput);
+                dataStr = decodedString.Remove(decodedString.IndexOf("::"));
+                ivStr = decodedString.Substring(decodedString.IndexOf("::") + 2);
+            }
+            catch
+            {
+                throw new UnknownFormatException("Ugyldigt format");
 
-            string dataStr = decodedString.Remove(decodedString.IndexOf("::"));
-            string ivStr = decodedString.Substring(decodedString.IndexOf("::") + 2);
+            }
+
 
             byte[] key = Convert.FromBase64String(keys[0].Trim());
             byte[] iv = Encoding.Default.GetBytes(ivStr);
